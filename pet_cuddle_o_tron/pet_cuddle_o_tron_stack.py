@@ -8,7 +8,7 @@ from aws_cdk import (
     aws_sns as sns,
     aws_ses_actions as ses_actions,
     aws_ses as ses,
-    aws_sns_subscriptions as subs,
+    aws_sns_subscriptions as subscriptions
 )
 
 
@@ -17,12 +17,10 @@ class PetCuddleOTronStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        # STage 1: Setting up SES service
+        # Stage 1: Setting up SES service & SNS topic
         email_sns_topic = sns.Topic(self, "PetCuddleOTronStack_SNS_Email")
 
-        sns_client = boto3.client("sns")
-        sns_client.subscribe(topic="PetCuddleOTronStack_SNS_Email", endpoint="sms", protocol="5109962934")
-        sns_client.close()
+        email_sns_topic.add_subscription(subscriptions.SmsSubscription("+15109962934"))
 
 
         ses.ReceiptRuleSet(self, "PetCuddleOTrongStack_SES_RuleSet",
