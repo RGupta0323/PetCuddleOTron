@@ -46,7 +46,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: cdk synth
-        run: cdk synth fitness-app-dev-stack
+        run: cdk synth pet-cuddle-o-tron-cdk-stack
 
       - name: cdk deploy
-        run: cdk deploy fitness-app-dev-stack --require-approval never
+        run: cdk deploy pet-cuddle-o-tron-cdk-stack --require-approval never
