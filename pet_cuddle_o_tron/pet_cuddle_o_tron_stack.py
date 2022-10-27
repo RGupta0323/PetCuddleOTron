@@ -8,7 +8,8 @@ from aws_cdk import (
     aws_sns as sns,
     aws_ses_actions as ses_actions,
     aws_ses as ses,
-    aws_sns_subscriptions as subscriptions
+    aws_sns_subscriptions as subscriptions,
+    aws_lambda as _lambda
 )
 
 
@@ -42,6 +43,13 @@ class PetCuddleOTronStack(Stack):
                            )
                            ]
                            )
+
+        email_lambda = _lambda.Function(self, "PetOCuddleTronEmailLambda",
+                                        runtime=_lambda.Runtime.PYTHON_3_7,
+                                        code=_lambda.Code.from_asset('src'),
+                                        handler="email_lambda.handler",
+
+                                        )
 
 
 
