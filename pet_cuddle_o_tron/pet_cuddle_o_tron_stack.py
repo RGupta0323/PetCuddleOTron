@@ -47,7 +47,7 @@ class PetCuddleOTronStack(Stack):
         email_lambda = _lambda.Function(self, "PetOCuddleTronEmailLambda",
                                         runtime=_lambda.Runtime.PYTHON_3_7,
                                         code=_lambda.Code.from_asset('src'),
-                                        handler="email_lambda.handler",
+                                        handler="email_lambda.lambda_handler",
 
                                         )
 
