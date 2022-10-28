@@ -1,3 +1,4 @@
+from aws_cdk.aws_iam import Role, ServicePrincipal, PolicyStatement
 from constructs import Construct
 import boto3
 from aws_cdk import (
@@ -9,7 +10,9 @@ from aws_cdk import (
     aws_ses_actions as ses_actions,
     aws_ses as ses,
     aws_sns_subscriptions as subscriptions,
-    aws_lambda as _lambda
+    aws_lambda as _lambda,
+    aws_stepfunctions as sfn,
+    aws_stepfunctions_tasks as tasks
 )
 
 
@@ -44,12 +47,30 @@ class PetCuddleOTronStack(Stack):
                            ]
                            )
 
+        # Stage 2: email lambda
         email_lambda = _lambda.Function(self, "PetOCuddleTronEmailLambda",
                                         runtime=_lambda.Runtime.PYTHON_3_7,
                                         code=_lambda.Code.from_asset('src'),
-                                        handler="email_lambda.lambda_handler",
-
+                                        handler="email_lambda.lambda_handler"
                                         )
+
+        # Stage 3: State Machine
+        state_machine_role = Role(self, "MyRole",
+                    assumed_by=ServicePrincipal("sns.amazonaws.com")
+                    )
+
+        state_machine_role.add_to_policy(PolicyStatement(
+            resources=["*"],
+            actions=["lambda:InvokeFunction"]
+        ))
+
+        state_machine = sfn.StateMachine(self, "MyStateMachine",
+                                         definition=tasks.LambdaInvoke(self, "MyLambdaTask",
+                                                                       lambda_function=email_lambda).next(
+                                             sfn.Succeed(self, "GreetedWorld")))
+
+
+
 
 
 
