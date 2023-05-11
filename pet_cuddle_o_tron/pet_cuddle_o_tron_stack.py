@@ -54,7 +54,7 @@ class PetCuddleOTronStack(Stack):
                                         handler="email_lambda.lambda_handler"
                                         )
 
-        # Stage 3: State Machine
+        # Stage 3: State Machine stuff 
         state_machine_role = Role(self, "MyRole",
                     assumed_by=ServicePrincipal("sns.amazonaws.com")
                     )
@@ -68,6 +68,8 @@ class PetCuddleOTronStack(Stack):
                                          definition=tasks.LambdaInvoke(self, "MyLambdaTask",
                                                                        lambda_function=email_lambda).next(
                                              sfn.Succeed(self, "GreetedWorld")))
+
+
 
 
 
