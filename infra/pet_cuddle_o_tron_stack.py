@@ -50,13 +50,13 @@ class PetCuddleOTronStack(Stack):
         # Stage 2: email lambda
         email_lambda = _lambda.Function(self, "PetOCuddleTronEmailLambda",
                                         runtime=_lambda.Runtime.PYTHON_3_7,
-                                        code=_lambda.Code.from_asset('src'),
+                                        code=_lambda.Code.from_asset('./software/src'),
                                         handler="email_lambda.lambda_handler"
                                         )
 
         #### Stage 3: State Machine stuff #########
         data = None 
-        with open("statemachine.json", "r") as f: 
+        with open("./infra/statemachine.json", "r") as f: 
             data = json.load(f)
 
         
@@ -75,7 +75,7 @@ class PetCuddleOTronStack(Stack):
         ))
 
         state_machine = sfn.StateMachine(self, "PetCuddleOTronStateMachine",
-                                         definition=data)
+                                         definition=data, definition_string=data)
 
 
 
