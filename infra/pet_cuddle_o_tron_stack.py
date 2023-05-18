@@ -75,7 +75,7 @@ class PetCuddleOTronStack(Stack):
         ))
 
         state_machine = sfn.StateMachine(self, "PetCuddleOTronStateMachine",
-                                         definition=data, definition_string=data)
+                                         definition=str(data))
 
 
 
