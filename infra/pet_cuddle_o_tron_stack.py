@@ -1,6 +1,6 @@
 from aws_cdk.aws_iam import Role, ServicePrincipal, PolicyStatement
 from constructs import Construct
-import boto3
+import boto3, json 
 from aws_cdk import (
     Duration,
     Stack,
@@ -54,7 +54,12 @@ class PetCuddleOTronStack(Stack):
                                         handler="email_lambda.lambda_handler"
                                         )
 
-        # Stage 3: State Machine stuff 
+        #### Stage 3: State Machine stuff #########
+        data = None 
+        with open("statemachine.json", "r") as f: 
+            data = json.load(f)
+
+        
         state_machine_role = Role(self, "MyRole",
                     assumed_by=ServicePrincipal("sns.amazonaws.com")
                     )
@@ -69,10 +74,8 @@ class PetCuddleOTronStack(Stack):
                   ]
         ))
 
-        state_machine = sfn.StateMachine(self, "MyStateMachine",
-                                         definition=tasks.LambdaInvoke(self, "MyLambdaTask",
-                                                                       lambda_function=email_lambda).next(
-                                             sfn.Succeed(self, "GreetedWorld")))
+        state_machine = sfn.StateMachine(self, "PetCuddleOTronStateMachine",
+                                         definition=data)
 
 
 
