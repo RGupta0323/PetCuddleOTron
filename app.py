@@ -2,7 +2,7 @@
 
 import aws_cdk as cdk
 
-from pet_cuddle_o_tron.pet_cuddle_o_tron_stack import PetCuddleOTronStack
+from infra.pet_cuddle_o_tron_stack import PetCuddleOTronStack
 
 
 app = cdk.App()

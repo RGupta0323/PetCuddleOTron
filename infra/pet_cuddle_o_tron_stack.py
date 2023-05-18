@@ -61,7 +61,12 @@ class PetCuddleOTronStack(Stack):
 
         state_machine_role.add_to_policy(PolicyStatement(
             resources=["*"],
-            actions=["lambda:InvokeFunction"]
+            actions=["lambda:InvokeFunction", "sns:*",
+                     "logs:CreateLogGroup", "logs:CreateLogStream", 
+                     "logs:PutLogEvents", "logs:CreateLogDelivery","logs:GetLogDelivery",
+                    "logs:UpdateLogDelivery", "logs:DeleteLogDelivery", "logs:ListLogDeliveries",
+                    "logs:PutResourcePolicy", "logs:DescribeResourcePolicies", "logs:DescribeLogGroups" 
+                  ]
         ))
 
         state_machine = sfn.StateMachine(self, "MyStateMachine",
