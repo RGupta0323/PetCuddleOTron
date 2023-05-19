@@ -60,8 +60,8 @@ class PetCuddleOTronStack(Stack):
             data = json.load(f)
 
         
-        state_machine_role = Role(self, "MyRole",
-                    assumed_by=ServicePrincipal("sns.amazonaws.com")
+        state_machine_role = Role(self, "StateMachineRole",
+                    assumed_by=ServicePrincipal("states.amazonaws.com")
                     )
 
         state_machine_role.add_to_policy(PolicyStatement(
@@ -74,7 +74,7 @@ class PetCuddleOTronStack(Stack):
                   ]
         ))
 
-        
+        # state machien was created in the console using boto3 to manually add him to the role to the state machine. 
         
 
 
