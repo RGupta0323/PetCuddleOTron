@@ -46,6 +46,10 @@ class DecimalEncoder(json.JSONEncoder):
             return int(obj)
         return super(DecimalEncoder, self).default(obj)
     
-def get_sm_arn(client): 
+def get_sm_arn(): 
     response = sm.list_state_machines()['stateMachines']
     print(response)
+    for element in response: 
+        if(element["name"] == "PetCuddleOTronStateMachine"): 
+            return element["stateMachineArn"]
+    print("[api_lambda.py get_sm_arn() line 55] State Machine %s could not be found. Response %s" % ("PetCuddleOTronStateMachine", response))
