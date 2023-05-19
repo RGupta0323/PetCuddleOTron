@@ -80,11 +80,22 @@ class PetCuddleOTronStack(Stack):
 
         ### STAGE 4 - Implement the API Gateway, API and supporting lambda function ### 
 
+        
+        
+        lambda_role = Role(self, "PetCuddleOTron_API_LambdaRole",
+                           assumed_by=ServicePrincipal("lambda.amazonaws.com"))
+        
+        lambda_role.add_to_policy(PolicyStatement(
+            resources=["*"], 
+            actions=["states:ListStateMachine"]
+        ))
+
         api_lambda =  _lambda.Function(self, "PetOCuddleTronAPILambda",
                                         runtime=_lambda.Runtime.PYTHON_3_9,
                                         code=_lambda.Code.from_asset('./software/src'),
-                                        handler="api_lambda.lambda_handler"
-                                        )
+                                        handler="api_lambda.lambda_handler", 
+                                        role=lambda_role
+                                    )
 
         
 
