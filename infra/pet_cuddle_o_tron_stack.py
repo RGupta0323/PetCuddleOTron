@@ -49,7 +49,7 @@ class PetCuddleOTronStack(Stack):
 
         # Stage 2: email lambda
         email_lambda = _lambda.Function(self, "PetOCuddleTronEmailLambda",
-                                        runtime=_lambda.Runtime.PYTHON_3_7,
+                                        runtime=_lambda.Runtime.PYTHON_3_9,
                                         code=_lambda.Code.from_asset('./software/src'),
                                         handler="email_lambda.lambda_handler"
                                         )
@@ -74,7 +74,18 @@ class PetCuddleOTronStack(Stack):
                   ]
         ))
 
-        # state machien was created in the console using boto3 to manually add him to the role to the state machine. 
+        # State Machien configuration for Stage 3 was manually done in the console. 
+
+
+
+        ### STAGE 4 - Implement the API Gateway, API and supporting lambda function ### 
+
+        api_lambda =  _lambda.Function(self, "PetOCuddleTronAPILambda",
+                                        runtime=_lambda.Runtime.PYTHON_3_9,
+                                        code=_lambda.Code.from_asset('./software/src'),
+                                        handler="api_lambda.lambda_handler"
+                                        )
+
         
 
 
