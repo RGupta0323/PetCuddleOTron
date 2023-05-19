@@ -1,7 +1,7 @@
 import boto3, json, os, decimal
 
 # Getting state machine arns 
-sm = boto3.client('stepfunctions') 
+sm = boto3.client('stepfunctions', region_name="us-east-1") 
 SM_ARN = 'YOUR_STATEMACHINE_ARN' 
 
 
