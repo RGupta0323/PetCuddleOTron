@@ -114,12 +114,12 @@ class PetCuddleOTronStack(Stack):
         ### STAGE 5 - Deploy static website with S3 ### 
         web_files_folder = "./software/resources/webfiles"
         web_files_path = web_files_folder + "/index.html"
-        web_bucket = s3.Bucket(self, "PetCuddleOTron-Static-UI-S3-Bucket", public_read_access=True, 
+        web_bucket = s3.Bucket(self, "PetCuddleOTron-Static-UI-S3-Bucket",
                     website_index_document="index.html", website_error_document="index.html"
                 )
 
         
-        s3_deploy.BucketDeployment(self, "DeployWebsite",
+        s3_deploy.BucketDeployment(self, "PetCuddleOTronS3WebBucket-Deployment",
             sources=[s3_deploy.Source.asset(web_files_folder)],
             destination_bucket=web_bucket,
             content_type="text/html",
