@@ -14,7 +14,8 @@ from aws_cdk import (
     aws_stepfunctions as sfn,
     aws_stepfunctions_tasks as tasks, 
     aws_apigateway as apigw, 
-    aws_s3 as s3 
+    aws_s3 as s3, 
+    aws_s3_deploy as s3_deploy
 )
 
 
@@ -112,9 +113,24 @@ class PetCuddleOTronStack(Stack):
 
         ### STAGE 5 - Deploy static website with S3 ### 
         web_files_path = "./software/resources/webfiles/index.html"
-        s3.Bucket(self, "PetCuddleOTron-Static-UI-S3-Bucket", public_read_access=True, 
+        web_bucket = s3.Bucket(self, "PetCuddleOTron-Static-UI-S3-Bucket", public_read_access=True, 
                     website_index_document=web_files_path, website_error_document=web_files_path
                 )
+
+        
+        s3_deploy.BucketDeployment(self, "DeployWebsite",
+            sources=[s3_deploy.Source.asset("./website-dist")],
+            destination_bucket=web_bucket,
+            content_type="text/html",
+            content_language="en",
+            storage_class=s3_deploy.StorageClass.INTELLIGENT_TIERING,
+            server_side_encryption=s3_deploy.ServerSideEncryption.AES_256,
+            cache_control=[
+                s3_deploy.CacheControl.set_public(),
+                s3_deploy.CacheControl.max_age(Duration.hours(1))
+            ],
+            access_control=s3.BucketAccessControl.BUCKET_OWNER_FULL_CONTROL
+        )
         
 
 
