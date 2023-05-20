@@ -117,6 +117,8 @@ class PetCuddleOTronStack(Stack):
         web_bucket = s3.Bucket(self, "PetCuddleOTron-Static-UI-S3-Bucket",
                     website_index_document="index.html", website_error_document="index.html"
                 )
+        
+        web_bucket
 
         
         s3_deploy.BucketDeployment(self, "PetCuddleOTronS3WebBucket-Deployment",
