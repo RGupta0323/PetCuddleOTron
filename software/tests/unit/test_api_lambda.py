@@ -1,5 +1,6 @@
 import pytest 
 from software.src.api_lambda import get_sm_arn
+from software.src.api_lambda import lambda_handler
 
 def test_get_sm_arn(): 
     result = get_sm_arn() 

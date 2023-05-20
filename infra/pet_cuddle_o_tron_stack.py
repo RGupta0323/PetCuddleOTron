@@ -12,7 +12,9 @@ from aws_cdk import (
     aws_sns_subscriptions as subscriptions,
     aws_lambda as _lambda,
     aws_stepfunctions as sfn,
-    aws_stepfunctions_tasks as tasks
+    aws_stepfunctions_tasks as tasks, 
+    aws_apigateway as apigw, 
+    aws_s3 as s3 
 )
 
 
@@ -96,7 +98,23 @@ class PetCuddleOTronStack(Stack):
                                         handler="api_lambda.lambda_handler", 
                                         role=lambda_role
                                     )
+        
+        api = apigw.LambdaRestApi(self, "PetOCuddleTron", handler=api_lambda, 
+                                  default_cors_preflight_options=apigw.CorsOptions(
+                                        allow_origins=apigw.Cors.ALL_ORIGINS,
+                                        allow_methods=apigw.Cors.ALL_METHODS
+                                    )
+                                )
 
+        api_endpoint = api.root.add_resource("petcuddleotron")
+        api_endpoint.add_method("GET", apigw.LambdaIntegration(api_lambda))
+
+
+        ### STAGE 5 - Deploy static website with S3 ### 
+        web_files_path = "./software/resources/webfiles/index.html"
+        s3.Bucket(self, "PetCuddleOTron-Static-UI-S3-Bucket", public_read_access=True, 
+                    website_index_document=web_files_path, website_error_document=web_files_path
+                )
         
 
 

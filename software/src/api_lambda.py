@@ -2,7 +2,7 @@ import boto3, json, os, decimal
 
 # Getting state machine arns 
 sm = boto3.client('stepfunctions', region_name="us-east-1") 
-SM_ARN = 'YOUR_STATEMACHINE_ARN' 
+#SM_ARN = 'YOUR_STATEMACHINE_ARN' 
 
 
 
@@ -20,6 +20,8 @@ def lambda_handler(event, context):
     checks.append('waitSeconds' in data)
     checks.append(type(data['waitSeconds']) == int)
     checks.append('message' in data)
+
+    SM_ARN = get_sm_arn()
 
     # if any checks fail, return error to API Gateway to return to client
     if False in checks:
