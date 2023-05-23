@@ -118,6 +118,10 @@ class PetCuddleOTronStack(Stack):
                     website_index_document="index.html", website_error_document="index.html"
                 )
         
+        web_bucket.add_to_resource_policy(
+            PolicyStatement(resources=["*"], actions=["s3:GetObject"])
+        )
+
         s3_deploy.BucketDeployment(self, "PetCuddleOTronS3WebBucket-Deployment",
             sources=[s3_deploy.Source.asset(web_files_folder)],
             destination_bucket=web_bucket,
