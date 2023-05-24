@@ -23,7 +23,8 @@ class PetCuddleOTronStack(Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # Stage 1: Setting up SES service & SNS topic
-        email_sns_topic = sns.Topic(self, "PetCuddleOTronStack_SNS_Email")
+        email_sns_topic = sns.Topic(self, "PetCuddleOTronStack_SNS_Email", display_name="PetCuddleOTronStack_SNS_Email", 
+                                    topic_name="PetCuddleOTronStack_SNS_Email")
 
         email_sns_topic.add_subscription(subscriptions.SmsSubscription("+15109962934"))
 
@@ -52,6 +53,7 @@ class PetCuddleOTronStack(Stack):
         email_lambda = _lambda.Function(self, "PetOCuddleTronEmailLambda",
                                         runtime=_lambda.Runtime.PYTHON_3_9,
                                         code=_lambda.Code.from_asset('./software/src'),
+                                        function_name="PetOCuddleTronEmailLambda",
                                         handler="email_lambda.lambda_handler"
                                         )
 
@@ -95,7 +97,8 @@ class PetCuddleOTronStack(Stack):
                                         runtime=_lambda.Runtime.PYTHON_3_9,
                                         code=_lambda.Code.from_asset('./software/src'),
                                         handler="api_lambda.lambda_handler", 
-                                        role=lambda_role
+                                        role=lambda_role, 
+                                        function_name="PetOCuddleTronAPILambda"
                                     )
         
         api = apigw.LambdaRestApi(self, "PetOCuddleTron", handler=api_lambda, 
@@ -112,7 +115,7 @@ class PetCuddleOTronStack(Stack):
         ### STAGE 5 - Deploy static website with S3 ### 
         web_files_folder = "./software/resources/webfiles"
         web_files_path = web_files_folder + "/index.html"
-        web_bucket = s3.Bucket(self, "PetCuddleOTron-Static-UI-S3-Bucket",
+        web_bucket = s3.Bucket(self, "PetCuddleOTron-Static-UI-S3-Bucket", bucket_name="PetCuddleOTron_Static_UI-S3_Bucket", 
                     website_index_document="index.html", website_error_document="index.html"
                 )
         
