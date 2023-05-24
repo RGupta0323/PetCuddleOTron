@@ -20,7 +20,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Install python dev dependencies
-        run: pip install --target ./software/requirements-dev.txt -r requirements-dev.txt
+        run: pip install -r ./software/requirements-dev.txt
 
       - name: Install python infrastructure dependencies
         run: pip install -r ./infra/requirements-infra.txt
