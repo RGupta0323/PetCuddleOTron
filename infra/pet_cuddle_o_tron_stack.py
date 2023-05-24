@@ -1,19 +1,16 @@
 from aws_cdk.aws_iam import Role, ServicePrincipal, PolicyStatement
 from constructs import Construct
 from . import config 
-import boto3, json 
+import json 
 from aws_cdk import (
     Duration,
-    Stack, CfnOutput, 
+    Stack,
     aws_iam as iam,
-    aws_sqs as sqs,
     aws_sns as sns,
     aws_ses_actions as ses_actions,
     aws_ses as ses,
     aws_sns_subscriptions as subscriptions,
     aws_lambda as _lambda,
-    aws_stepfunctions as sfn,
-    aws_stepfunctions_tasks as tasks, 
     aws_apigateway as apigw, 
     aws_s3 as s3, 
     aws_s3_deployment as s3_deploy
