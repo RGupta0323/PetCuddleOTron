@@ -121,7 +121,7 @@ class PetCuddleOTronStack(Stack):
         
         #CfnOutput(self, "public-UI-s3-bucket-arn", value=web_bucket.bucket_arn)
         
-        web_bucket_arn = "arn:aws:s3:::%s/*" % web_bucket.bucket_arn
+        web_bucket_arn = "arn:aws:s3:::pet-cuddle-o-tron-cdk-st-petcuddleotronstaticuis3-17ad315o3utx8/*"
         web_bucket.add_to_resource_policy(
             PolicyStatement(resources=[web_bucket_arn], actions=["s3:GetObject"], 
                                 principals=[iam.ArnPrincipal("arn:aws:iam::783978466054:user/Admin")]
