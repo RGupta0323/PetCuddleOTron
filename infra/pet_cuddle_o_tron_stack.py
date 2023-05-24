@@ -123,7 +123,7 @@ class PetCuddleOTronStack(Stack):
         
         web_bucket_arn = "arn:aws:s3:::%s/*" % web_bucket.bucket_arn
         web_bucket.add_to_resource_policy(
-            PolicyStatement(resources=["*"], actions=["s3:GetObject"], principals=[iam.ArnPrincipal(web_bucket_arn)])
+            PolicyStatement(resources=["*"], actions=["s3:GetObject"], principals=[iam.ArnPrincipal("arn:aws:iam::783978466054:user/Admin")])
         )
 
         s3_deploy.BucketDeployment(self, "PetCuddleOTronS3WebBucket-Deployment",
