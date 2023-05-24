@@ -118,8 +118,10 @@ class PetCuddleOTronStack(Stack):
                     website_index_document="index.html", website_error_document="index.html"
                 )
         
+        print("[pet_cuddle_o_tron_stack.py line 121] web_bucket arn: {}".format(web_bucket.bucket_arn))
+        
         web_bucket.add_to_resource_policy(
-            PolicyStatement(resources=["*"], actions=["s3:GetObject"], principals=[iam.ArnPrincipal(web_bucket.bucket_arn)])
+            PolicyStatement(resources=["*"], actions=["s3:GetObject"], principals=[iam.ArnPrincipal(web_bucket.bucket_arn+"/*")])
         )
 
         s3_deploy.BucketDeployment(self, "PetCuddleOTronS3WebBucket-Deployment",
