@@ -124,7 +124,7 @@ class PetCuddleOTronStack(Stack):
         web_bucket_arn = config.web_bucket_arn
         web_bucket.add_to_resource_policy(
             PolicyStatement(resources=[web_bucket_arn], actions=["s3:GetObject"], 
-                                principals=[iam.ArnPrincipal(config.iam_role_arn)]
+                                principals=["*"]
                             )
         )
         
