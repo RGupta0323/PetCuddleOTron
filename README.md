@@ -65,4 +65,4 @@ command.
 Enjoy!
 
 
-Url to access website - http://pet-cuddle-o-tron-cdk-st-petcuddleotronstaticuis3-17ad315o3utx8.s3-website-us-east-1.amazonaws.com/index.html
+Url to access website - http://petcuddleotronstaticuis3bucket.s3-website-us-east-1.amazonaws.com
