@@ -135,7 +135,8 @@ class PetCuddleOTronStack(Stack):
             content_type="text/html",
             content_language="en",
             storage_class=s3_deploy.StorageClass.STANDARD_IA,
-            server_side_encryption=s3_deploy.ServerSideEncryption.AES_256,
+            server_side_encryption=None, 
+            #server_side_encryption=s3_deploy.ServerSideEncryption.AES_256,
             cache_control=[
                 s3_deploy.CacheControl.set_public(),
                 s3_deploy.CacheControl.max_age(Duration.hours(1))
